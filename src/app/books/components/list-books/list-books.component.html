@@ -1,0 +1,7 @@
+<h1>{{ this.books[0].genre }} Section</h1>
+<div class="books-container">
+  @for (book of this.books; track book.book_id) {
+    <books-components-book [book]="book"></books-components-book>
+  }
+</div>
+<hr />
