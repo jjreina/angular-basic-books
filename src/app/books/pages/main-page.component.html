@@ -1,9 +1,12 @@
 <books-components-list-books
   [books]="this.terrorBooks"
+  (booksNumberEventEmit)="setNumberOfBooks($event, this.terrorBooks[0].genre)"
 ></books-components-list-books>
 <books-components-list-books
   [books]="this.fictionsBooks"
+  (booksNumberEventEmit)="setNumberOfBooks($event, this.fictionsBooks[0].genre)"
 ></books-components-list-books>
 <books-components-list-books
   [books]="this.romanceBooks"
+  (booksNumberEventEmit)="setNumberOfBooks($event, this.romanceBooks[0].genre)"
 ></books-components-list-books>

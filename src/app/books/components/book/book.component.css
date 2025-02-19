@@ -2,6 +2,8 @@
   display: flex;
   border: solid 1px #ccc;
   padding: 15px 15px 15px 15px;
+  margin-bottom: 10px;
+  gap: 10px;
 }
 
 .card-img {

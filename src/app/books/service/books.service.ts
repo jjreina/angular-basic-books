@@ -10,32 +10,36 @@ export class BooksService {
   private url = 'http://localhost:3001/books';
   constructor(private http: HttpClient) {}
 
-  public getTerrorBooks(): Observable<Book[]> {
+  public getTerrorBooks(numberOfBooks: number): Observable<Book[]> {
     return this.http.get<BookResonse>(this.url).pipe(
       map((bookResonse: BookResonse) => {
         return bookResonse.books
           .filter((book) => book.genre === 'terror')
-          .slice(0, 4);
+          .slice(0, numberOfBooks);
       }),
     );
   }
 
-  public getFictionBooks(): Observable<Book[]> {
+  public getFictionBooks(numberOfBooks: number): Observable<Book[]> {
     return this.http.get<BookResonse>(this.url).pipe(
       map((bookResonse: BookResonse) => {
         return bookResonse.books
           .filter((book) => book.genre === 'fiction')
-          .slice(0, 4);
+          .slice(0, numberOfBooks);
       }),
     );
   }
-  public getRomanceBooks(): Observable<Book[]> {
+  public getRomanceBooks(numberOfBooks: number): Observable<Book[]> {
     return this.http.get<BookResonse>(this.url).pipe(
       map((bookResonse: BookResonse) => {
         return bookResonse.books
           .filter((book) => book.genre === 'romance')
-          .slice(0, 4);
+          .slice(0, numberOfBooks);
       }),
     );
+  }
+
+  public getBooks(numberOfBooks: number, books: Book[]): Book[] {
+    return books.slice(0, numberOfBooks);
   }
 }

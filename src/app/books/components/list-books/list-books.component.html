@@ -1,5 +1,11 @@
-<h1>{{ this.books[0].genre }} Section</h1>
+@if (this.books.length !== 0) {
+  <h1>{{ this.books[0].genre }} Section</h1>
+}
+
 <div class="books-container">
+  <books-components-input-books-number
+    (booksNumberEventEmit)="emitBooksNumber($event)"
+  ></books-components-input-books-number>
   @for (book of this.books; track book.book_id) {
     <books-components-book [book]="book"></books-components-book>
   }
