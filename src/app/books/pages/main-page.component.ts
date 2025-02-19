@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BooksService } from '../service/books.service';
-import { Book } from '../interfaces/books.interface';
+import { Book, BookResonse } from '../interfaces/books.interface';
 
 @Component({
   selector: 'books-main-page-component',
@@ -8,6 +8,7 @@ import { Book } from '../interfaces/books.interface';
   standalone: false,
 })
 export class MainPageComponent implements OnInit {
+  public allBooks: Book[] = [];
   public terrorBooks: Book[] = [];
   public fictionsBooks: Book[] = [];
   public romanceBooks: Book[] = [];
@@ -15,38 +16,45 @@ export class MainPageComponent implements OnInit {
   constructor(private booksService: BooksService) {}
 
   ngOnInit() {
-    this.booksService.getTerrorBooks(4).subscribe((res: Book[]) => {
-      this.terrorBooks = res;
-    });
-
-    this.booksService.getFictionBooks(4).subscribe((res: Book[]) => {
-      this.fictionsBooks = res;
-    });
-
-    this.booksService.getRomanceBooks(4).subscribe((res: Book[]) => {
-      this.romanceBooks = res;
+    this.booksService.getAllBooks().subscribe((res: BookResonse) => {
+      this.allBooks = res.books;
+      this.terrorBooks = this.booksService.getBooksByNumberAndGenre(
+        4,
+        'terror',
+        this.allBooks,
+      );
+      this.fictionsBooks = this.booksService.getBooksByNumberAndGenre(
+        4,
+        'fiction',
+        this.allBooks,
+      );
+      this.romanceBooks = this.booksService.getBooksByNumberAndGenre(
+        4,
+        'romance',
+        this.allBooks,
+      );
     });
   }
 
   public setNumberOfBooks(numberOfBooks: number, genre: string): void {
     if (genre === 'terror') {
-      this.booksService
-        .getTerrorBooks(numberOfBooks)
-        .subscribe((res: Book[]) => {
-          this.terrorBooks = res;
-        });
+      this.terrorBooks = this.booksService.getBooksByNumberAndGenre(
+        numberOfBooks,
+        genre,
+        this.allBooks,
+      );
     } else if (genre === 'fiction') {
-      this.booksService
-        .getFictionBooks(numberOfBooks)
-        .subscribe((res: Book[]) => {
-          this.fictionsBooks = res;
-        });
+      this.fictionsBooks = this.booksService.getBooksByNumberAndGenre(
+        numberOfBooks,
+        genre,
+        this.allBooks,
+      );
     } else if (genre === 'romance') {
-      this.booksService
-        .getRomanceBooks(numberOfBooks)
-        .subscribe((res: Book[]) => {
-          this.romanceBooks = res;
-        });
+      this.romanceBooks = this.booksService.getBooksByNumberAndGenre(
+        numberOfBooks,
+        genre,
+        this.allBooks,
+      );
     }
   }
 }
